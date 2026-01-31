@@ -1,99 +1,63 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { uploadBareme, uploadCopies, preCorrection } from "../services/api";
 
 function Examen() {
-  const [reponse, setReponse] = useState("");
-  const [envoye, setEnvoye] = useState(false);
-
-  const handleSubmit = () => {
-    if (reponse.trim() === "") {
-      alert("Veuillez rédiger votre réponse avant de soumettre.");
-      return;
+  const [bareme, setBareme] = useState(null);
+  const [copies, setCopies] = useState([]);
+  const [resultat, setResultat] = useState(null);
+  const [copies, setCopies] = useState([
+    {
+      eleve: "",
+      fichiers: []
     }
-    setEnvoye(true);
+  ]);
+
+  const handleBaremeUpload = async () => {
+    await uploadBareme(bareme);
+    alert("Bareme enregistré");
+  };
+
+  const handleCopiesUpload = async () => {
+    await uploadCopies(copies);
+    alert("Copies uploadées");
+  };
+
+  const handleCorrection = async () => {
+    const res = await preCorrection();
+    setResultat(res.data);
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2 style={styles.title}>🎓 Mode Examen</h2>
+    <div style={{ padding: 30 }}>
+      <h2>MODE EXAMEN</h2>
 
-        <p style={styles.consigne}>
-          Sujet : <br />
-          <strong>
-            Expliquez l’impact de la technologie sur l’éducation moderne.
-          </strong>
-        </p>
+      <h3>1. Scanner le bareme</h3>
+      <input type="file" onChange={(e) => setBareme(e.target.files[0])} />
+      <button onClick={handleBaremeUpload}>Envoyer bareme</button>
 
-        {!envoye ? (
-          <>
-            <textarea
-              style={styles.textarea}
-              placeholder="Rédigez votre réponse ici..."
-              value={reponse}
-              onChange={(e) => setReponse(e.target.value)}
-            />
+      <h3>2. Scanner les copies (recto / verso)</h3>
+      <input
+        type="file"
+        multiple
+        onChange={(e) => setCopies(Array.from(e.target.files))}
+      />
+      <button onClick={handleCopiesUpload}>Envoyer copies</button>
 
-            <button style={styles.button} onClick={handleSubmit}>
-              Soumettre la copie
-            </button>
-          </>
-        ) : (
-          <div style={styles.success}>
-            ✅ Copie soumise avec succès <br />
-            ⏳ Correction en cours…
-          </div>
-        )}
-      </div>
+      <h3>3. Pre-correction IA</h3>
+      <button onClick={handleCorrection}>Lancer correction</button>
+
+      {resultat && (
+        <div>
+          <h4>Note : {resultat.note}/20</h4>
+          <ul>
+            {resultat.commentaires.map((c, i) => (
+              <li key={i}>{c}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
-
-const styles = {
-  container: {
-    minHeight: "100vh",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  card: {
-    background: "rgba(255,255,255,0.08)",
-    padding: "40px",
-    borderRadius: "18px",
-    width: "90%",
-    maxWidth: "650px",
-    boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
-  },
-  title: {
-    marginBottom: "20px",
-  },
-  consigne: {
-    marginBottom: "20px",
-    lineHeight: "1.6",
-  },
-  textarea: {
-    width: "100%",
-    height: "180px",
-    padding: "15px",
-    borderRadius: "10px",
-    border: "none",
-    fontSize: "15px",
-    resize: "none",
-    marginBottom: "20px",
-  },
-  button: {
-    width: "100%",
-    padding: "14px",
-    borderRadius: "12px",
-    background: "linear-gradient(90deg, #00e0ff, #00b4d8)",
-    border: "none",
-    fontWeight: "bold",
-    cursor: "pointer",
-  },
-  success: {
-    textAlign: "center",
-    fontSize: "16px",
-    lineHeight: "1.6",
-  },
-};
 
 export default Examen;

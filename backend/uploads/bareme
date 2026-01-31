@@ -1,0 +1,19 @@
+{
+  "Q1": {
+    "mots_cles": ["définition", "concept"],
+    "points": 5
+  },
+  "Q2": {
+    "mots_cles": ["exemple", "illustration"],
+    "points": 10
+  }
+}
+
+def corriger(texte, bareme):
+    score = 0
+    for q in bareme:
+        for mot in bareme[q]["mots_cles"]:
+            if mot.lower() in texte.lower():
+                score += bareme[q]["points"]
+                break
+    return score
