@@ -1,15 +1,9 @@
 from flask import Blueprint, jsonify
+from auth.utils import require_auth
 
-prof_bp = Blueprint("professor", __name__)
+prof_bp = Blueprint("prof", __name__, url_prefix="/prof")
 
-@prof_bp.route("/prof/dashboard", methods=["GET"])
+@prof_bp.route("/dashboard")
+@require_auth(role="prof")
 def dashboard_prof():
-    return jsonify({
-        "copies_corrigees": 124,
-        "classes": ["3ème A", "3ème B", "Terminale D"],
-        "dernieres_corrections": [
-            {"eleve": "Kouassi Jean", "note": 15},
-            {"eleve": "Yao Awa", "note": 17},
-            {"eleve": "Traoré Moussa", "note": 12}
-        ]
-    })
+    return jsonify({"message": "Bienvenue Professeur"})
