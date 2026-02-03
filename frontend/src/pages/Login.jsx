@@ -1,28 +1,35 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+const API_URL = "https://correction-auto-backend-5.onrender.com";
+
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post(
-        "http://127.0.0.1:5000/auth/login",
-        { email, password }
-      );
+      const res = await axios.post(`${API_URL}/auth/login`, {
+        email,
+        password
+      });
 
       localStorage.setItem("token", res.data.token);
-      setMessage("✅ Connexion réussie");
-    } catch {
-      setMessage("❌ Email ou mot de passe incorrect");
+      localStorage.setItem("role", res.data.role);
+
+      if (res.data.role === "prof") navigate("/professeur");
+      if (res.data.role === "admin") navigate("/admin");
+
+    } catch (err) {
+      alert("Connexion échouée");
     }
   };
 
   return (
-    <div className="container">
-      <h2>Connexion Professeur</h2>
+    <div style={{ padding: 40 }}>
+      <h2>Connexion</h2>
 
       <input
         placeholder="Email"
@@ -37,9 +44,9 @@ export default function Login() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button onClick={handleLogin}>Connexion</button>
-
-      <p>{message}</p>
+      <button onClick={handleLogin}>Se connecter</button>
     </div>
   );
 }
+
+export default Login;

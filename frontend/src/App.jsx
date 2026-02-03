@@ -1,22 +1,22 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import Home from "./pages/Home";
-import CorrectionLibre from "./pages/CorrectionLibre";
+import Login from "./pages/Login";
 import ModeExamen from "./pages/ModeExamen";
-import ProfDashboard from "./pages/ProfDashboard";
-import AdminDashboard from "./pages/AdminDashboard";
+import Professeur from "./pages/Professeur";
+import Admin from "./pages/Admin";
 
-export default function App() {
+function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/correction-libre" element={<CorrectionLibre />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/examen" element={<ModeExamen />} />
-        <Route path="/professeur" element={<ProfDashboard />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/professeur" element={<Professeur />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>
   );
 }
+
+export default App;
