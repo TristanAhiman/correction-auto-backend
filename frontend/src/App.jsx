@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import ModeExamen from "./pages/ModeExamen";
 import Professeur from "./pages/Professeur";
 import Admin from "./pages/Admin";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -12,8 +13,23 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/examen" element={<ModeExamen />} />
-        <Route path="/professeur" element={<Professeur />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route
+  path="/professeur"
+  element={
+    <ProtectedRoute role="prof">
+      <Professeur />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin"
+  element={
+    <ProtectedRoute role="admin">
+      <Admin />
+    </ProtectedRoute>
+  }
+/>
       </Routes>
     </BrowserRouter>
   );
