@@ -13,7 +13,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/correction-libre" element={<CorrectionLibre />} />
-        <Route path="/mode-examen" element={<ModeExamen />} />
+        <Route path="/examen" element={<ModeExamen />} />
         <Route path="/professeur" element={<ProfDashboard />} />
         <Route path="/admin" element={<AdminDashboard />} />
       </Routes>

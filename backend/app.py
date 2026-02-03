@@ -4,7 +4,7 @@ import os
 
 # --- création app ---
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # --- ROUTE TEST (OBLIGATOIRE POUR RENDER) ---
 @app.route("/")
