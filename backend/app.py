@@ -26,6 +26,7 @@ from bulletin.routes import bulletin_bp
 from professor.routes import prof_bp
 from ocr.routes import ocr_bp
 from ia.routes import ia_bp
+from paiement.routes import paiement_bp
 
 # --- ENREGISTREMENT DES MODULES ---
 app.register_blueprint(examen_bp, url_prefix="/examen")
@@ -35,6 +36,7 @@ app.register_blueprint(bulletin_bp, url_prefix="/bulletin")
 app.register_blueprint(prof_bp, url_prefix="/prof")
 app.register_blueprint(ocr_bp)
 app.register_blueprint(ia_bp)
+app.register_blueprint(paiement_bp)
 
 # --- LANCEMENT SERVEUR ---
 if __name__ == "__main__":

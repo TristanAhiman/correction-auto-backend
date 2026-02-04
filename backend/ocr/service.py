@@ -1,8 +1,6 @@
 import pytesseract
 from PIL import Image
-import io
 
-def extract_text_from_image(file):
-    image = Image.open(io.BytesIO(file.read()))
-    text = pytesseract.image_to_string(image, lang="fra")
+def extract_text(image_path):
+    text = pytesseract.image_to_string(Image.open(image_path), lang="fra")
     return text

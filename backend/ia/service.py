@@ -1,16 +1,22 @@
-def corriger_copie(texte_copie, bareme):
-    score = 0
-    commentaires = []
+from openai import OpenAI
+client = OpenAI()
 
-    if len(texte_copie.strip()) < 50:
-        commentaires.append("Copie trop courte, développement insuffisant.")
-        score = 5
-    else:
-        commentaires.append("Bonne compréhension globale du sujet.")
-        commentaires.append("Quelques imprécisions dans l'argumentation.")
-        score = 14
+def corriger(texte, bareme):
+    prompt = f"""
+    Barème :
+    {bareme}
 
-    return {
-        "note": score,
-        "commentaires": commentaires
-    }
+    Copie élève :
+    {texte}
+
+    Donne :
+    - une note sur 20
+    - des commentaires pédagogiques
+    """
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[{"role": "user", "content": prompt}]
+    )
+
+    return response.choices[0].message.content

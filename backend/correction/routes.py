@@ -1,6 +1,17 @@
 from flask import Blueprint, request, jsonify
 import os
 from werkzeug.utils import secure_filename
+from ocr.service import extract_text
+
+@correction_bp.route("/ocr", methods=["POST"])
+def ocr_copie():
+    file = request.files["file"]
+    path = f"/tmp/{file.filename}"
+    file.save(path)
+
+    texte = extract_text(path)
+
+    return jsonify({"texte": texte})
 
 # OCR
 from ocr.utils import ocr_image, ocr_pdf

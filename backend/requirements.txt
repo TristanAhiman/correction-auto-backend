@@ -7,3 +7,5 @@ pdf2image
 opencv-python
 reportlab
 opencv-python-headless
+openai
+paydunya
