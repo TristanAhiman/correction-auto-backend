@@ -3,7 +3,7 @@ fetch("https://ton-backend.onrender.com/pay", {
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
     plan: "prof",
-    amount: 7500
+    amount: 10000
   })
 })
 .then(res => res.json())
