@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from .service import extract_text_from_image
+from .service import extract_text
 
 ocr_bp = Blueprint("ocr", __name__, url_prefix="/ocr")
 
@@ -9,7 +9,7 @@ def extract():
         return jsonify({"error": "Aucun fichier envoyé"}), 400
 
     file = request.files["file"]
-    text = extract_text_from_image(file)
+    text = extract_text(path)
 
     return jsonify({
         "status": "success",
