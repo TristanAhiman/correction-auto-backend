@@ -9,7 +9,7 @@ def extract():
         return jsonify({"error": "Aucun fichier envoyé"}), 400
 
     file = request.files["file"]
-    text = extract_text(path)
+    text = extract_text(image_path)
 
     return jsonify({
         "status": "success",
